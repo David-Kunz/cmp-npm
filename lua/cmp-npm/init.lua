@@ -22,20 +22,14 @@ function source:complete(params, callback)
   -- figure out if we are completing the package name or version
   local cur_line = params.context.cursor_line
   local cur_col = params.context.cursor.col
-  local name, version = string.match(cur_line, '%s*"(.*)"%s*:%s*"(.*)"?')
-  local _, idx_third_quote = string.find(cur_line, '.*".*".*"')
+  local name = string.match(cur_line, '%s*"([^"]*)"?')
+  local _, idx_after_third_quote = string.find(cur_line, '.*".*".*"')
   local find_version = false
-  if idx_third_quote then
-    find_version = cur_col >= idx_third_quote 
-  end
-  if name == nil then
-    name = string.match(cur_line, '%s*"(.*)"?')
+  if idx_after_third_quote then
+    find_version = cur_col >= idx_after_third_quote
   end
   if name == nil then return end
   name = name:gsub('"', "")
-  if version then
-    version = version:gsub('"', "")
-  end
   if find_version then
     Job
       :new({
@@ -46,6 +40,7 @@ function source:complete(params, callback)
           "--json",
           on_exit = function(job)
             local result = job:result()
+            print(vim.inspect(result))
             table.remove(result, 1)
             table.remove(result, table.getn(result))
             local items = {}
