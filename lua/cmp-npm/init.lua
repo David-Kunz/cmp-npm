@@ -17,11 +17,17 @@ function source:get_debug_name()
   return 'npm'
 end
 
+
 function source:complete(params, callback)
   -- figure out if we are completing the package name or version
-  local cur_cword = vim.fn.expand("<cWORD>"):gsub('"', "")
   local cur_line = params.context.cursor_line
+  local cur_col = params.context.cursor.col
   local name, version = string.match(cur_line, '%s*"(.*)"%s*:%s*"(.*)"?')
+  local _, idx_third_quote = string.find(cur_line, '.*".*".*"')
+  local find_version = false
+  if idx_third_quote then
+    find_version = cur_col >= idx_third_quote 
+  end
   if name == nil then
     name = string.match(cur_line, '%s*"(.*)"?')
   end
@@ -30,7 +36,7 @@ function source:complete(params, callback)
   if version then
     version = version:gsub('"', "")
   end
-  if version and cur_cword == version then
+  if find_version then
     Job
       :new({
           "npm",
