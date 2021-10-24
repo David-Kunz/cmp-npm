@@ -8,7 +8,7 @@ source.new = function()
 end
 
 function source:is_available()
-  local filename = vim.fn.expand('%')
+  local filename = vim.fn.expand('%:t')
   return filename == "package.json"
 end
 
