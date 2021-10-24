@@ -1,6 +1,7 @@
 local Job = require "plenary.job"
 
 local source = {}
+local opts = {}
 
 source.new = function()
   local self = setmetatable({}, { __index = source })
@@ -90,3 +91,10 @@ function source:execute(completion_item, callback)
 end
 
 require('cmp').register_source("npm", source.new())
+
+return {
+  setup = function(_opts)
+    -- doesn't do anything at the moment
+    opts = _opts
+  end
+}
