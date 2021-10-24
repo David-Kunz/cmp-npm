@@ -29,7 +29,6 @@ function source:complete(params, callback)
     find_version = cur_col >= idx_after_third_quote
   end
   if name == nil then return end
-  name = name:gsub('"', "")
   if find_version then
     Job
       :new({
