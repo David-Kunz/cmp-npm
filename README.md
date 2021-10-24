@@ -8,7 +8,7 @@ The source is only active if you're in a `package.json` file.
 
 ## Requirements
 
-It needs the `npm` command line tool.
+It needs the Neovim plugin [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) and the [npm](https://npmjs.com/) command line tool.
 
 ## Installation
 
