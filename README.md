@@ -42,4 +42,4 @@ cmp.setup({
 
 ## Limitations
 
-The versions are not correctly sorted (depends on `nvim-cmp`'s sort algorithm).
+The versions are not correctly sorted (depends on `nvim-cmp`'s sorting algorithm).
