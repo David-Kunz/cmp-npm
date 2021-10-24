@@ -23,6 +23,19 @@ use 'nvim-lua/plenary.nvim'
 use 'David-Kunz/cmp-npm'
 ```
 
+Run the `setup` function and add the source
+```lua
+require('cmp-npm').setup({})
+cmp.setup({
+  ...,
+  sources = {
+    { name = 'npm', keyword_length = 4 },
+    ...
+  }
+})
+```
+(in Vimscript, make sure to add `lua << EOF` before and `EOF` after the lua code)
+
 ## Limitations
 
 The versions are not correctly sorted (depends on `nvim-cmp`'s sort algorithm).
