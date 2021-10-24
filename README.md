@@ -19,8 +19,12 @@ Plug 'David-Kunz/cmp-npm'
 ```
 For [packer](https://github.com/wbthomason/packer.nvim):
 ```
-use 'nvim-lua/plenary.nvim'
-use 'David-Kunz/cmp-npm'
+use {
+  'David-Kunz/cmp-npm',
+  requires = {
+    'nvim-lua/plenary.nvim'
+  }
+}
 ```
 
 Run the `setup` function and add the source
@@ -38,4 +42,4 @@ cmp.setup({
 
 ## Limitations
 
-The versions are not correctly sorted (depends on `nvim-cmp`'s sort algorithm).
+The versions are not correctly sorted (depends on `nvim-cmp`'s sorting algorithm).
