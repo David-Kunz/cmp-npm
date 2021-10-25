@@ -39,7 +39,6 @@ function source:complete(params, callback)
           "--json",
           on_exit = function(job)
             local result = job:result()
-            print(vim.inspect(result))
             table.remove(result, 1)
             table.remove(result, table.getn(result))
             local items = {}
