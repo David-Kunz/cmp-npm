@@ -1,4 +1,5 @@
 local Job = require "plenary.job"
+local next = next
 
 local source = {}
 local opts = {}
@@ -44,7 +45,11 @@ function source:complete(params, callback)
             local items = {}
             for _, npm_item in ipairs(result) do
               local version = string.match(npm_item, '%s*"(.*)",?')
-              table.insert(items, { label = version })
+
+              -- show all versions
+              if (type(opts.ignore_non_semantic_versions) == "table" and next(opts.ignore_non_semantic_versions) == nil) or opts.ignore_non_semantic_versions == false or opts.ignore_non_semantic_versions == nil then
+                table.insert(items, { label = version })
+              end
             end
             -- unfortunately, nvim-cmp uses its own sorting algorith which doesn't work for semantic versions
             -- but at least we can bring the original set in order
