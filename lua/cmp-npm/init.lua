@@ -55,6 +55,15 @@ function source:complete(params, callback)
               if (opts.ignore_non_semantic_versions == true or (type(opts.ignore_non_semantic_versions) == "table")) and string.match(version, '^%d+%.%d+%.%d+$') then
                 table.insert(items, { label = version })
               end
+
+              -- show filtered versions
+              if type(opts.ignore_non_semantic_versions) == "table" and type(opts.non_semantic_versions) == "table" and opts.ignore_non_semantic_versions ~= nil then
+                for _, v in pairs(opts.non_semantic_versions) do
+                  if opts.ignore_non_semantic_versions[v] == false and string.match(version, '^%d+%.%d+%.%d+%-' .. v) then
+                    table.insert(items, { label = version })
+                  end
+                end
+              end
             end
             -- unfortunately, nvim-cmp uses its own sorting algorith which doesn't work for semantic versions
             -- but at least we can bring the original set in order
