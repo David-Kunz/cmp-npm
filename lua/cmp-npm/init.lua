@@ -47,17 +47,25 @@ function source:complete(params, callback)
               local version = string.match(npm_item, '%s*"(.*)",?')
 
               -- show all versions
-              if (type(opts.ignore_non_semantic_versions) == "table" and next(opts.ignore_non_semantic_versions) == nil) or opts.ignore_non_semantic_versions == false or opts.ignore_non_semantic_versions == nil then
+              if (type(opts.ignore_non_semantic_versions) == "table" and next(opts.ignore_non_semantic_versions) == nil)
+                or opts.ignore_non_semantic_versions == false
+                or opts.ignore_non_semantic_versions == nil
+                then
                 table.insert(items, { label = version })
               end
 
               -- show semantic versions
-              if (opts.ignore_non_semantic_versions == true or (type(opts.ignore_non_semantic_versions) == "table")) and string.match(version, '^%d+%.%d+%.%d+$') then
+              if (opts.ignore_non_semantic_versions == true or (type(opts.ignore_non_semantic_versions) == "table"))
+                and string.match(version, '^%d+%.%d+%.%d+$')
+                then
                 table.insert(items, { label = version })
               end
 
               -- show filtered versions
-              if type(opts.ignore_non_semantic_versions) == "table" and type(opts.non_semantic_versions_labels) == "table" and opts.ignore_non_semantic_versions ~= nil then
+              if type(opts.ignore_non_semantic_versions) == "table"
+                and type(opts.non_semantic_versions_labels) == "table"
+                and opts.ignore_non_semantic_versions ~= nil
+                then
                 for _, version_label in pairs(opts.non_semantic_versions_labels) do
                   if opts.ignore_non_semantic_versions[version_label] == false and string.match(version, '^%d+%.%d+%.%d+%-' .. version_label) then
                     table.insert(items, { label = version })
