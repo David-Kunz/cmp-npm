@@ -57,9 +57,9 @@ function source:complete(params, callback)
               end
 
               -- show filtered versions
-              if type(opts.ignore_non_semantic_versions) == "table" and type(opts.non_semantic_versions) == "table" and opts.ignore_non_semantic_versions ~= nil then
-                for _, v in pairs(opts.non_semantic_versions) do
-                  if opts.ignore_non_semantic_versions[v] == false and string.match(version, '^%d+%.%d+%.%d+%-' .. v) then
+              if type(opts.ignore_non_semantic_versions) == "table" and type(opts.non_semantic_versions_labels) == "table" and opts.ignore_non_semantic_versions ~= nil then
+                for _, version_label in pairs(opts.non_semantic_versions_labels) do
+                  if opts.ignore_non_semantic_versions[version_label] == false and string.match(version, '^%d+%.%d+%.%d+%-' .. version_label) then
                     table.insert(items, { label = version })
                   end
                 end
