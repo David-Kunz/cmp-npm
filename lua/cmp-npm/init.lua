@@ -1,5 +1,4 @@
 local Job = require "plenary.job"
-local next = next
 
 local source = {}
 local opts = {
@@ -49,32 +48,19 @@ function source:complete(params, callback)
             for _, npm_item in ipairs(result) do
               local version = string.match(npm_item, '%s*"(.*)",?')
 
-              -- show all versions
-              if (type(opts.ignore_non_semantic_versions) == "table" and next(opts.ignore_non_semantic_versions) == nil)
-                or opts.ignore_non_semantic_versions == false
-                or opts.ignore_non_semantic_versions == nil
-                then
-                table.insert(items, { label = version })
-              end
-
-              -- show semantic versions
-              if (opts.ignore_non_semantic_versions == true or (type(opts.ignore_non_semantic_versions) == "table"))
-                and string.match(version, '^%d+%.%d+%.%d+$')
-                then
-                table.insert(items, { label = version })
-              end
-
-              -- show filtered versions
-              if type(opts.ignore_non_semantic_versions) == "table"
-                and type(opts.non_semantic_versions_labels) == "table"
-                and opts.ignore_non_semantic_versions ~= nil
-                then
-                for _, version_label in pairs(opts.non_semantic_versions_labels) do
-                  if opts.ignore_non_semantic_versions[version_label] == false and string.match(version, '^%d+%.%d+%.%d+%-' .. version_label) then
-                    table.insert(items, { label = version })
+              if opts.only_semantic_versions and not string.match(version, '^%d+%.%d+%.%d+$') then
+                goto continue
+              else
+                for _, ignoreString in ipairs(opts.ignore) do
+                  if string.match(version, ignoreString) then
+                    goto continue
                   end
                 end
               end
+
+              table.insert(items, { label = version })
+
+              ::continue::
             end
             -- unfortunately, nvim-cmp uses its own sorting algorith which doesn't work for semantic versions
             -- but at least we can bring the original set in order
@@ -123,7 +109,6 @@ require('cmp').register_source("npm", source.new())
 
 return {
   setup = function(_opts)
-    -- doesn't do anything at the moment
-    opts = _opts
+    opts = vim.tbl_deep_extend('force', opts, _opts) -- will extend the default options
   end
 }
