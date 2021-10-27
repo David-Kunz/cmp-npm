@@ -2,7 +2,10 @@ local Job = require "plenary.job"
 local next = next
 
 local source = {}
-local opts = {}
+local opts = {
+  ignore = {},
+  only_semantic_versions = false,
+}
 
 source.new = function()
   local self = setmetatable({}, { __index = source })
