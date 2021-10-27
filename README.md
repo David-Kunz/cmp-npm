@@ -51,7 +51,7 @@ The `setup` function accepts an options table which defaults to:
 
 - `ignore` (table): Allows you to filter out all versions which match one of its entries,
 e.g. `ignore = { 'beta', 'rc' }`.
-- `only_semantic_versions` (Boolean): If true, will filter out all versions which don't follow 
+- `only_semantic_versions` (Boolean): If `true`, will filter out all versions which don't follow 
   the `mayor.minor.patch` schema.
 
 
