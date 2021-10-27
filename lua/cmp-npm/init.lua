@@ -109,6 +109,8 @@ require('cmp').register_source("npm", source.new())
 
 return {
   setup = function(_opts)
-    opts = vim.tbl_deep_extend('force', opts, _opts) -- will extend the default options
+    if _opts then
+      opts = vim.tbl_deep_extend('force', opts, _opts) -- will extend the default options
+    end
   end
 }
