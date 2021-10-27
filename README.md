@@ -40,6 +40,21 @@ cmp.setup({
 ```
 (in Vimscript, make sure to add `lua << EOF` before and `EOF` after the lua code)
 
+The `setup` function accepts an options table which defaults to:
+
+```lua
+{
+  ignore = {},
+  only_semantic_versions = false,
+}
+```
+
+- The `ignore` table allows you to filter out all versions which match one of its entries,
+e.g. `ignore = { 'beta', 'rc' }`.
+- The flag `only_semantic_versions = true` will filter out all versions which don't follow 
+  the `mayor.minor.patch` schema.
+
+
 ## Limitations
 
 The versions are not correctly sorted (depends on `nvim-cmp`'s sorting algorithm).
