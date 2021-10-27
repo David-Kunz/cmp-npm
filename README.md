@@ -40,6 +40,22 @@ cmp.setup({
 ```
 (in Vimscript, make sure to add `lua << EOF` before and `EOF` after the lua code)
 
+## Configuration
+
+Default config:
+```lua
+require('cmp-npm').setup({
+  -- show only semantic versions (MAJOR.MINOR.PATCH)
+  -- 'false' will show all available versions
+  only_semantic_versions = false,
+  -- if specified, will not show provided version labels
+  -- works only if only_semantic_versions is set to false
+  -- for example: { 'beta', 'rc', 'dev', 'insiders', 'experimental' }
+  ignore = {},
+})
+```
+
+
 ## Limitations
 
 The versions are not correctly sorted (depends on `nvim-cmp`'s sorting algorithm).
