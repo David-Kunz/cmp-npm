@@ -1,7 +1,10 @@
 local Job = require "plenary.job"
 
 local source = {}
-local opts = {}
+local opts = {
+  ignore = {},
+  only_semantic_versions = false,
+}
 
 source.new = function()
   local self = setmetatable({}, { __index = source })
@@ -44,7 +47,20 @@ function source:complete(params, callback)
             local items = {}
             for _, npm_item in ipairs(result) do
               local version = string.match(npm_item, '%s*"(.*)",?')
+
+              if opts.only_semantic_versions and not string.match(version, '^%d+%.%d+%.%d+$') then
+                goto continue
+              else
+                for _, ignoreString in ipairs(opts.ignore) do
+                  if string.match(version, ignoreString) then
+                    goto continue
+                  end
+                end
+              end
+
               table.insert(items, { label = version })
+
+              ::continue::
             end
             -- unfortunately, nvim-cmp uses its own sorting algorith which doesn't work for semantic versions
             -- but at least we can bring the original set in order
@@ -93,7 +109,6 @@ require('cmp').register_source("npm", source.new())
 
 return {
   setup = function(_opts)
-    -- doesn't do anything at the moment
-    opts = _opts
+    opts = vim.tbl_deep_extend('force', opts, _opts) -- will extend the default options
   end
 }
