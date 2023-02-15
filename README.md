@@ -46,6 +46,7 @@ The `setup` function accepts an options table which defaults to:
 {
   ignore = {},
   only_semantic_versions = false,
+  only_latest_version = false
 }
 ```
 
@@ -53,6 +54,7 @@ The `setup` function accepts an options table which defaults to:
 e.g. `ignore = { 'beta', 'rc' }`.
 - `only_semantic_versions` (Boolean): If `true`, will filter out all versions which don't follow 
   the `major.minor.patch` schema.
+- `only_latest_version` (Boolean): If `true`, will only show latest release version.
 
 
 ## Limitations
