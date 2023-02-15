@@ -44,12 +44,14 @@ function source:complete(params, callback)
           on_exit = function(job)
             local result = job:result()
             local version = result[1]
-            local versions = {
-              { label = version },
-              { label = "^" .. version },
-              { label = "~" .. version }
-            }
-            callback(versions)
+            if version then
+              local versions = {
+                { label = version },
+                { label = "^" .. version },
+                { label = "~" .. version }
+              }
+              callback(versions)
+            end
           end
       }):start()
     else Job
