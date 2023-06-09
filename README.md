@@ -27,6 +27,18 @@ use {
 }
 ```
 
+For [lazy.nvim](https://github.com/folke/lazy.nvim):
+
+```
+{
+  "David-Kunz/cmp-npm",
+  lazy = false,
+  config = function()
+    require('cmp-npm').setup({})
+  end
+}
+```
+
 Run the `setup` function and add the source
 ```lua
 require('cmp-npm').setup({})
