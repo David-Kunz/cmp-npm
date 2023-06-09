@@ -4,6 +4,7 @@ local source = {}
 local opts = {
   ignore = {},
   only_semantic_versions = false,
+  only_latest_version = false
 }
 
 source.new = function()
@@ -33,7 +34,27 @@ function source:complete(params, callback)
   end
   if name == nil then return end
   if find_version then
+    if opts.only_latest_version then
     Job
+      :new({
+          "npm",
+          "info",
+          name,
+          "version",
+          on_exit = function(job)
+            local result = job:result()
+            local version = result[1]
+            if version then
+              local versions = {
+                { label = version },
+                { label = "^" .. version },
+                { label = "~" .. version }
+              }
+              callback(versions)
+            end
+          end
+      }):start()
+    else Job
       :new({
           "npm",
           "info",
@@ -74,6 +95,7 @@ function source:complete(params, callback)
             callback(items)
           end
       }):start()
+    end
   else
     Job
       :new({
