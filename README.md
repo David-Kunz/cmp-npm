@@ -33,7 +33,7 @@ For [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   "David-Kunz/cmp-npm",
   dependencies = { 'nvim-lua/plenary.nvim' },
-  lazy = false,
+  ft = "json",
   config = function()
     require('cmp-npm').setup({})
   end
